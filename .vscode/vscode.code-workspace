@@ -1,0 +1,17 @@
+{
+  "folders": [
+    {
+      "name": "🌱 tn-validate",
+      "path": "../"
+    },
+    {
+      "name": "🌽 Source",
+      "path": "../src"
+    },
+    {
+      "name": "🍤 Examples",
+      "path": "../examples"
+    }
+  ],
+  "settings": {}
+}

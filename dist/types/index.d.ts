@@ -1,0 +1,18 @@
+import { Validate } from './types/Validate';
+import { IsJson, IsNull, IsDate, IsArray, IsRegExp, IsObject, IsString, IsNumber, IsBoolean, IsFunction, IsUndefined, IsValidDate, IsNumString, IsArrObject, IsNullUndefined } from './types/SingularModules';
+export declare const validate: Validate;
+export declare const isJson: IsJson;
+export declare const isNull: IsNull;
+export declare const isDate: IsDate;
+export declare const isArray: IsArray;
+export declare const isRegExp: IsRegExp;
+export declare const isObject: IsObject;
+export declare const isString: IsString;
+export declare const isNumber: IsNumber;
+export declare const isBoolean: IsBoolean;
+export declare const isFunction: IsFunction;
+export declare const isUndefined: IsUndefined;
+export declare const isValidDate: IsValidDate;
+export declare const isNumString: IsNumString;
+export declare const isArrObject: IsArrObject;
+export declare const isNullUndefined: IsNullUndefined;
