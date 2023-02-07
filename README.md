@@ -13,21 +13,25 @@ validate(value, ...criteria)
 
 _Better **TypeScript** Support with singular modules_
 
-- `isJson()`
-- `isNull()`
-- `isArray()`
-- `isRegExp()`
-- `isObject()`
-- `isDate()`
 - `isString()`
 - `isNumber()`
 - `isBoolean()`
 - `isFunction()`
 - `isUndefined()`
+- `isNull()`
+- `isArray()`
+- `isObject()`
+- `isRegExp()`
+- `isDate()`
 - `isValidDate()`
+- `isJson()`
 - `isNumString()`
 - `isArrObject()`
 - `isNullUndefined()`
+- `isStrArr()`
+- `isNumArr()`
+- `isBoolArr()`
+- `isNumStrArr()`
 
 ## Type `Criterion`
 
@@ -62,10 +66,10 @@ type Criterion =
 # Examples
 
 ```ts
-validate('any') // always true
+validate('any')
 validate('string', String)
 validate('school', String, Boolean)
-validate(50, Number, (val) => val > 0 && val < 100)
+validate(50, Number, val => val > 0 && val < 100)
 validate('{}', 'json')
 validate(/^\w+$/, RegExp)
 validate('foo-bar', /^foo-.+/)
