@@ -1,36 +1,5 @@
 import _typeof from "@babel/runtime/helpers/esm/typeof";
 import { consoler } from 'tn-consoler';
-
-var isNull = function isNull(value) {
-  return value === null;
-};
-
-var isDate = function isDate(value) {
-  return Object.prototype.toString.call(value) === '[object Date]';
-};
-
-var isJson = function isJson(value) {
-  try {
-    var obj = JSON.parse(value);
-
-    if (_typeof(obj) === 'object' && obj !== null) {
-      return true;
-    }
-  } catch (e) {}
-
-  return false;
-};
-
-var isArray = function isArray(value) {
-  return Array.isArray(value);
-};
-
-var possibleTypes = ['string', 'number', 'boolean', 'function', 'array', 'object', 'json', 'null', 'undefined', 'regexp', 'date', 'valid-date'];
-
-var isRegExp = function isRegExp(value) {
-  return Object.prototype.toString.call(value) === '[object RegExp]';
-};
-
 var cons = {
   index: {
     noValidator: function noValidator(value, criteria) {
@@ -50,184 +19,139 @@ var cons = {
     }
   }
 };
-
-function getValidators(criteria) {
+var possibleTypes = ['string', 'number', 'boolean', 'function', 'array', 'object', 'json', 'null', 'undefined', 'regexp', 'date', 'valid-date'];
+var isString = function isString(val) {
+  return typeof val === 'string';
+};
+var isNumber = function isNumber(val) {
+  return typeof val === 'number';
+};
+var isBoolean = function isBoolean(val) {
+  return typeof val === 'boolean';
+};
+var isFunction = function isFunction(val) {
+  return typeof val === 'function';
+};
+var isUndefined = function isUndefined(val) {
+  return typeof val === 'undefined';
+};
+var isNull = function isNull(val) {
+  return val === null;
+};
+var isArray = function isArray(val) {
+  return Array.isArray(val);
+};
+var isObject = function isObject(val) {
+  return Object.prototype.toString.call(val) === '[object Object]';
+};
+var isRegExp = function isRegExp(val) {
+  return Object.prototype.toString.call(val) === '[object RegExp]';
+};
+var isDate = function isDate(val) {
+  return Object.prototype.toString.call(val) === '[object Date]';
+};
+var isValidDate = function isValidDate(val) {
+  return isDate(val) && !isNaN(val.getTime());
+};
+var isJson = function isJson(val) {
+  try {
+    var obj = JSON.parse(val);
+    if (_typeof(obj) === 'object' && obj !== null) return true;
+  } catch (_unused) {}
+  return false;
+};
+var isNumString = function isNumString(val) {
+  return isNumber(val) || isString(val);
+};
+var isArrObject = function isArrObject(val) {
+  return isArray(val) || isObject(val);
+};
+var isNullUndefined = function isNullUndefined(val) {
+  return isNull(val) || isUndefined(val);
+};
+var isStrArr = function isStrArr(val) {
+  return isArray(val) && val.map(function (str) {
+    return isString(str);
+  }).every(function (i) {
+    return i;
+  });
+};
+var isNumArr = function isNumArr(val) {
+  return isArray(val) && val.map(function (num) {
+    return isNumber(num);
+  }).every(function (i) {
+    return i;
+  });
+};
+var isBoolArr = function isBoolArr(val) {
+  return isArray(val) && val.map(function (bool) {
+    return isBoolean(bool);
+  }).every(function (i) {
+    return i;
+  });
+};
+var isNumStrArr = function isNumStrArr(val) {
+  return isArray(val) && val.map(function (numstr) {
+    return isNumString(numstr);
+  }).every(function (i) {
+    return i;
+  });
+};
+var getValidators = function getValidators(criteria) {
   var types = [];
   var funcs = [];
-  var regexp = []; // adding to the list (types, funcs)
-
+  var regexp = [];
   criteria.forEach(function (type) {
-    // types: string
-    if (typeof type === 'string' && possibleTypes.includes(type)) {
-      types.push(type);
-      return;
-    } // types: constructors & funcs
-
-
+    if (typeof type === 'string' && possibleTypes.includes(type)) return types.push(type);
     var match = type && type.toString().match(/^\s*function (\w+)/);
     var mtype = match ? match[1].toLowerCase() : false;
-
-    if (mtype && possibleTypes.includes(mtype)) {
-      types.push(mtype);
-      return;
-    } else if (typeof type === 'function') {
-      funcs.push(type);
-      return;
-    } // types: regexp
-
-
-    if (isRegExp(type)) {
-      // @ts-ignore: ts thinks type = string, but its a RegExp
-      regexp.push(type);
-      return;
-    }
-
-    if (process.env.NODE_ENV === 'development') {
-      cons.validate.getValidators.unsupported(type);
-    }
+    if (mtype && possibleTypes.includes(mtype)) return types.push(mtype);
+    if (typeof type === 'function') return funcs.push(type);
+    if (isRegExp(type)) return regexp.push(type);
+    if (process.env.NODE_ENV === 'development') cons.validate.getValidators.unsupported(type);
   });
   return {
     types: types,
     funcs: funcs,
     regexp: regexp
   };
-}
-
-var isObject = function isObject(value) {
-  return Object.prototype.toString.call(value) === '[object Object]';
 };
-
-var isValidDate = function isValidDate(value) {
-  if (isDate(value)) {
-    if (!isNaN(value.getTime())) {
-      return true;
-    }
-  }
-
-  return false;
+var typeValidation = function typeValidation(type, value) {
+  if (type === 'json') return isJson(value);
+  if (type === 'null') return isNull(value);
+  if (type === 'object') return isObject(value);
+  if (type === 'array') return isArray(value);
+  if (type === 'regexp') return isRegExp(value);
+  if (type === 'date') return isDate(value);
+  if (type === 'valid-date') return isValidDate(value);else return _typeof(value) === type;
 };
-
-function typeValidation(type, value) {
-  if (type === 'json') {
-    return isJson(value);
-  } else if (type === 'null') {
-    return isNull(value);
-  } else if (type === 'object') {
-    return isObject(value);
-  } else if (type === 'array') {
-    return isArray(value);
-  } else if (type === 'regexp') {
-    return isRegExp(value);
-  } else if (type === 'date') {
-    return isDate(value);
-  } else if (type === 'valid-date') {
-    return isValidDate(value);
-  } else {
-    // string | number | boolean | undefined | function
-    return _typeof(value) === type;
-    /* eslint-disable-line valid-typeof */
-  }
-}
-
 var validate = function validate(value) {
   for (var _len = arguments.length, criteria = new Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
     criteria[_key - 1] = arguments[_key];
   }
-
-  // if no validator given
-  if (!criteria.length) {
-    return true;
-  } // getting the validators - types, funcs
-
-
+  if (!criteria.length) return true;
   var _getValidators = getValidators(criteria),
-      types = _getValidators.types,
-      funcs = _getValidators.funcs,
-      regexp = _getValidators.regexp; // if no supported validator found
-
-
+    types = _getValidators.types,
+    funcs = _getValidators.funcs,
+    regexp = _getValidators.regexp;
   if (!types.length && !funcs.length && !regexp.length) {
-    if (process.env.NODE_ENV === 'development') {
-      cons.index.noValidator(value, criteria);
-    }
-
+    if (process.env.NODE_ENV === 'development') cons.index.noValidator(value, criteria);
     return false;
-  } // validate by types
-
-
+  }
   var valid = !types.length;
   types.forEach(function (type) {
-    valid = valid || typeValidation(type, value);
+    return valid = valid || typeValidation(type, value);
   });
-
-  if (!valid) {
-    return false;
-  } // validate by funcs
-
-
+  if (!valid) return false;
   funcs.forEach(function (func) {
-    valid = !!(valid && func(value));
-  }); // validate by regexp
-
+    return valid = !!(valid && func(value));
+  });
   if (regexp.length) {
-    if (typeof value !== 'string') {
-      return false;
-    }
-
+    if (typeof value !== 'string') return false;
     regexp.forEach(function (reg) {
-      valid = !!(valid && value.match(reg));
+      return valid = !!(valid && value.match(reg));
     });
   }
-
   return valid;
 };
-
-var isString = function isString(value) {
-  return typeof value === 'string';
-};
-
-var isNumber = function isNumber(value) {
-  return typeof value === 'number';
-};
-
-var isBoolean = function isBoolean(value) {
-  return typeof value === 'boolean';
-};
-
-var isFunction = function isFunction(value) {
-  return typeof value === 'function';
-};
-
-var isUndefined = function isUndefined(value) {
-  return typeof value === 'undefined';
-};
-
-var isArrObject = function isArrObject(value) {
-  return isArray(value) || isObject(value);
-};
-
-var isNumString = function isNumString(value) {
-  return isNumber(value) || isString(value);
-};
-
-var isNullUndefined = function isNullUndefined(value) {
-  return isNull(value) || isUndefined(value);
-};
-
-var validate$1 = validate;
-var isJson$1 = isJson;
-var isNull$1 = isNull;
-var isDate$1 = isDate;
-var isArray$1 = isArray;
-var isRegExp$1 = isRegExp;
-var isObject$1 = isObject;
-var isString$1 = isString;
-var isNumber$1 = isNumber;
-var isBoolean$1 = isBoolean;
-var isFunction$1 = isFunction;
-var isUndefined$1 = isUndefined;
-var isValidDate$1 = isValidDate;
-var isNumString$1 = isNumString;
-var isArrObject$1 = isArrObject;
-var isNullUndefined$1 = isNullUndefined;
-export { isArrObject$1 as isArrObject, isArray$1 as isArray, isBoolean$1 as isBoolean, isDate$1 as isDate, isFunction$1 as isFunction, isJson$1 as isJson, isNull$1 as isNull, isNullUndefined$1 as isNullUndefined, isNumString$1 as isNumString, isNumber$1 as isNumber, isObject$1 as isObject, isRegExp$1 as isRegExp, isString$1 as isString, isUndefined$1 as isUndefined, isValidDate$1 as isValidDate, validate$1 as validate };
+export { isArrObject, isArray, isBoolArr, isBoolean, isDate, isFunction, isJson, isNull, isNullUndefined, isNumArr, isNumStrArr, isNumString, isNumber, isObject, isRegExp, isStrArr, isString, isUndefined, isValidDate, validate };

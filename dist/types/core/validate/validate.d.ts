@@ -1,3 +1,2 @@
-import { Validate } from '../../types/Validate';
-declare const validate: Validate;
-export default validate;
+import { Criterion } from '../../types/Criterion';
+export declare const validate: (value: any, ...criteria: Criterion[]) => boolean;

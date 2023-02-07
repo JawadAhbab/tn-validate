@@ -13,7 +13,7 @@
   "scripts": {
     "Serve": "parcel .dev/parcel/index.html --out-dir .dev/parcel/dist --cache-dir .dev/parcel/cache --open",
     "Build": "rimraf dist && rollup -c",
-    "❤️‍🔥 Publish": "rimraf .dev/parcel/dist & rimraf .dev/parcel/cache && npm run Build && npm publish"
+    "❤️‍🔥 Publish": "rimraf .dev/parcel/dist & rimraf .dev/parcel/cache && npm run Build && yarn publish"
   },
   "author": "Turnova",
   "license": "MIT",

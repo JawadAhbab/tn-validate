@@ -1,2 +1,2 @@
 import { PossibleType } from '../../../types/Criterion';
-export default function (type: PossibleType, value: any): boolean;
+export declare const typeValidation: (type: PossibleType, value: any) => boolean;
