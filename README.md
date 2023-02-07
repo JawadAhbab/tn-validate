@@ -1,5 +1,3 @@
-<p align="center"><i>Bundle Size - 937 bytes gzipped</i></p>
-
 ## Main module - `validate()`
 
 ```ts
