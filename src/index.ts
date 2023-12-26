@@ -2,6 +2,7 @@ export { validate } from './core/validate/validate'
 export {
   isArray,
   isArrObject,
+  isClass,
   isBoolArr,
   isBoolean,
   isDate,
