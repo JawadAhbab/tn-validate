@@ -8,7 +8,7 @@ export const isUndefined = (val: any): val is undefined => typeof val === 'undef
 
 export const isNull = (val: any): val is null => val === null
 export const isArray = (val: any): val is any[] => Array.isArray(val)
-export const isClass = (val: any): val is AnyClass => isFunction(val) && val.prototype && val.prototype.constructor === val
+export const isClass = (val: any): val is AnyClass => Boolean(isFunction(val) && val.prototype && val.prototype.constructor === val)
 export const isObject = (val: any): val is AnyObject => Object.prototype.toString.call(val) === '[object Object]'
 export const isRegExp = (val: any): val is RegExp => Object.prototype.toString.call(val) === '[object RegExp]'
 export const isDate = (val: any): val is Date => Object.prototype.toString.call(val) === '[object Date]'

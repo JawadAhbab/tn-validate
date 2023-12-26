@@ -28,7 +28,7 @@ const isFunction = val => typeof val === 'function';
 const isUndefined = val => typeof val === 'undefined';
 const isNull = val => val === null;
 const isArray = val => Array.isArray(val);
-const isClass = val => isFunction(val) && val.prototype && val.prototype.constructor === val;
+const isClass = val => Boolean(isFunction(val) && val.prototype && val.prototype.constructor === val);
 const isObject = val => Object.prototype.toString.call(val) === '[object Object]';
 const isRegExp = val => Object.prototype.toString.call(val) === '[object RegExp]';
 const isDate = val => Object.prototype.toString.call(val) === '[object Date]';
