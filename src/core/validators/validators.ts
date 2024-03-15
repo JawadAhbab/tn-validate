@@ -1,6 +1,7 @@
 import { AnyObject, AnyClass } from 'tn-typescript'
 
 export const isString = (val: any): val is string => typeof val === 'string'
+export const isSymbol = (val: any): val is Symbol => typeof val === 'symbol'
 export const isNumber = (val: any): val is number => typeof val === 'number'
 export const isBoolean = (val: any): val is boolean => typeof val === 'boolean'
 export const isFunction = (val: any): val is Function => typeof val === 'function'

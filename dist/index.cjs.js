@@ -24,6 +24,7 @@ const cons = {
 };
 const possibleTypes = ['string', 'number', 'boolean', 'function', 'array', 'object', 'json', 'null', 'undefined', 'regexp', 'date', 'valid-date'];
 const isString = val => typeof val === 'string';
+const isSymbol = val => typeof val === 'symbol';
 const isNumber = val => typeof val === 'number';
 const isBoolean = val => typeof val === 'boolean';
 const isFunction = val => typeof val === 'function';
@@ -119,6 +120,7 @@ exports.isObject = isObject;
 exports.isRegExp = isRegExp;
 exports.isStrArr = isStrArr;
 exports.isString = isString;
+exports.isSymbol = isSymbol;
 exports.isUndefined = isUndefined;
 exports.isValidDate = isValidDate;
 exports.validate = validate;

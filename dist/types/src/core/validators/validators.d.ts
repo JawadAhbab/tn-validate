@@ -1,5 +1,6 @@
 import { AnyObject, AnyClass } from 'tn-typescript';
 export declare const isString: (val: any) => val is string;
+export declare const isSymbol: (val: any) => val is Symbol;
 export declare const isNumber: (val: any) => val is number;
 export declare const isBoolean: (val: any) => val is boolean;
 export declare const isFunction: (val: any) => val is Function;

@@ -18,6 +18,7 @@ export {
   isRegExp,
   isStrArr,
   isString,
+  isSymbol,
   isUndefined,
   isValidDate,
 } from './core/validators/validators'

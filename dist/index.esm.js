@@ -22,6 +22,7 @@ const cons = {
 };
 const possibleTypes = ['string', 'number', 'boolean', 'function', 'array', 'object', 'json', 'null', 'undefined', 'regexp', 'date', 'valid-date'];
 const isString = val => typeof val === 'string';
+const isSymbol = val => typeof val === 'symbol';
 const isNumber = val => typeof val === 'number';
 const isBoolean = val => typeof val === 'boolean';
 const isFunction = val => typeof val === 'function';
@@ -99,4 +100,4 @@ const validate = function (value) {
   }
   return valid;
 };
-export { isArrObject, isArray, isBoolArr, isBoolean, isClass, isDate, isFunction, isJson, isNull, isNullUndefined, isNumArr, isNumStrArr, isNumString, isNumber, isObject, isRegExp, isStrArr, isString, isUndefined, isValidDate, validate };
+export { isArrObject, isArray, isBoolArr, isBoolean, isClass, isDate, isFunction, isJson, isNull, isNullUndefined, isNumArr, isNumStrArr, isNumString, isNumber, isObject, isRegExp, isStrArr, isString, isSymbol, isUndefined, isValidDate, validate };

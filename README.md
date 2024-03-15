@@ -14,6 +14,7 @@ validate(value, ...criteria)
 _Better **TypeScript** Support with singular modules_
 
 - `isString()`
+- `isSymbol()`
 - `isNumber()`
 - `isBoolean()`
 - `isFunction()`
